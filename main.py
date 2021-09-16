@@ -10,6 +10,7 @@ def now():
     return decimal.Decimal(time.time())
 
 
+# get the actual balance
 def get_balance():
     with open('balance.json', 'r') as file:
         try:
@@ -19,11 +20,13 @@ def get_balance():
             return {'ZUSD': '1000.0', 'EUR.HOLD': '0.0000'}
 
 
+# save the actual balance
 def save_balance(data):
     with open('balance.json', 'w') as file:
         json.dump(data, file, indent=4)
 
 
+# update the actual balance
 def update_balance(amount, name, price, sold):
     balance = get_balance()
     if sold:
@@ -34,6 +37,12 @@ def update_balance(amount, name, price, sold):
         balance[name[:-4]] = str(amount)
     save_balance(balance)
     return balance
+
+
+# get the price data from the crypto
+def get_crypto_data(pair, since):
+    ret = kraken.query_public('OHLC', data={'pair': pair, 'since': since})
+    return ret['result'][pair]
 
 
 if __name__ == '__main__':
