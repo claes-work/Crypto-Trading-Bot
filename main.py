@@ -122,6 +122,14 @@ def get_available_funds():
     return funds
 
 
+# delete entries from the crypto data array by a key
+def delete_entries(data, key):
+    clean_array = []
+    for entry in data[key][-10:]:
+        clean_array.append(entry)
+        return clean_array
+
+
 # control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
