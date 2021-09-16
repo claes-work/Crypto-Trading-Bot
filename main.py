@@ -217,6 +217,13 @@ def try_buy(data, name, crypto_data):
         buy_crypto(crypto_data, name)
 
 
+# analyse the data to see if it is a good opportunity to sell and try to sell if so
+def try_sell(data, name, crypto_data):
+    make_trade = check_opportunity(data, name, True, False)
+    if make_trade:
+        sell_crypto(crypto_data, name)
+
+
 # control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
