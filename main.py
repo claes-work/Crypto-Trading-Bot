@@ -130,6 +130,15 @@ def delete_entries(data, key):
         return clean_array
 
 
+# clear crypto data by the name of a crypto pair
+def clear_crypto_data(name):
+    data = load_crypto_data_from_file()
+    for key in data[name]:
+        data[name][key] = delete_entries(data[name], key)
+    save_crypto_data(data)
+    return data
+
+
 # control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
