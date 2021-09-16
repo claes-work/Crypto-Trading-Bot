@@ -24,6 +24,18 @@ def save_balance(data):
         json.dump(data, file, indent=4)
 
 
+def update_balance(amount, name, price, sold):
+    balance = get_balance()
+    if sold:
+        balance.pop(name[:-4], None)
+        balance['ZUSD'] = str(float(balance['ZUSD'] + amount * price))
+    else:
+        balance['ZUSD'] = str(float(balance['ZUSD']) - (amount * price))
+        balance[name[:-4]] = str(amount)
+    save_balance(balance)
+    return balance
+
+
 if __name__ == '__main__':
     k = krakenex.API()
     kraken.load_key('kraken.key')
