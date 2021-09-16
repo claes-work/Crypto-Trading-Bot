@@ -19,6 +19,11 @@ def get_balance():
             return {'ZUSD': '1000.0', 'EUR.HOLD': '0.0000'}
 
 
+def save_balance(data):
+    with open('balance.json', 'w') as file:
+        json.dump(data, file, indent=4)
+
+
 if __name__ == '__main__':
     k = krakenex.API()
     kraken.load_key('kraken.key')
