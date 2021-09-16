@@ -63,6 +63,11 @@ def get_purchasing_price(name):
     return trades[name][-1]['price_usd']
 
 
+# get all crypto trading pairs
+def get_pairs():
+    return ['XETHZUSD', 'XXBTZUSD', 'MANAUSD', 'GRTUSD', 'LSKUSD', 'SCUSD']
+
+
 if __name__ == '__main__':
     k = krakenex.API()
     kraken.load_key('kraken.key')
