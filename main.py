@@ -139,6 +139,17 @@ def clear_crypto_data(name):
     return data
 
 
+# execute and save a trade
+def buy_crypto(crypto_data, name):
+    analysis_data = clear_crypto_data(name)
+    price = float(crypto_data[-1][4])
+    funds = get_available_funds()
+    amount = funds * (1 / price)
+    balance = update_balance(amount, name, price, False)
+    amount = get_balance()[name[:-4]]
+    save_trade(price, name, False, True, amount)
+
+
 # control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
