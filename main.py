@@ -185,7 +185,6 @@ def check_opportunity(data, name, sell, buy):
             else:
                 trends.append('NOTREND')
             previous_value = mva
-
         areas = []
         for mva in reversed(data['close'][-5:]):
             area = 0
@@ -222,6 +221,27 @@ def try_sell(data, name, crypto_data):
     make_trade = check_opportunity(data, name, True, False)
     if make_trade:
         sell_crypto(crypto_data, name)
+
+
+# check the crypto data and try to buy or sell
+def check_data(name, crypto_data, should_buy):
+    high = 0
+    low = 0
+    close = 0
+    for b in crypto_data[-100:]:
+        if b not in mva[name]['prices']:
+            mva[name]['prices'].append(b)
+        high += float(b[2])
+        low += float(b[3])
+        close += float(b[4])
+    mva[name]['high'].append(high / 100)
+    mva[name]['low'].append(low / 100)
+    mva[name]['close'].append(close / 100)
+    save_crypto_data(mva)
+    if should_buy:
+        try_buy(mva[name], name, crypto_data)
+    else:
+        try_sell(mva[name], name, crypto_data)
 
 
 # control structure system variable __main__
