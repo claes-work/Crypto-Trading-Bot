@@ -139,7 +139,7 @@ def clear_crypto_data(name):
     return data
 
 
-# execute and save a trade
+# execute a buy order and save the trade
 def buy_crypto(crypto_data, name):
     analysis_data = clear_crypto_data(name)
     price = float(crypto_data[-1][4])
@@ -147,6 +147,16 @@ def buy_crypto(crypto_data, name):
     amount = funds * (1 / price)
     balance = update_balance(amount, name, price, False)
     amount = get_balance()[name[:-4]]
+    save_trade(price, name, False, True, amount)
+
+
+# execute a sell order and save the trade
+def sell_crypto(crypto_data, name):
+    balance = get_balance()
+    analysis_data = clear_crypto_data(name)
+    price = float(crypto_data[-1][4])
+    amount = float(balance[name[:-4]])
+    balance = update_balance(amount, name, price, True)
     save_trade(price, name, False, True, amount)
 
 
