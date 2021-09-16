@@ -160,6 +160,56 @@ def sell_crypto(crypto_data, name):
     save_trade(price, name, False, True, amount)
 
 
+# check a buy or sell opportunity by calculating percentage increase of each point
+def check_opportunity(data, name, sell, buy):
+    count = 0
+    previous_value = 0
+    trends = []
+    for mva in data['close'][-10:]:
+        if previous_value == 0:
+            previous_value = mva
+        else:
+            if mva / previous_value > 1:
+                # uptrend
+                if count < 1:
+                    count = 1
+                else:
+                    count += 1
+                trends.append('UPTREND')
+            elif mva / previous_value < 1:
+                trends.append('DOWNTREND')
+                if count > 0:
+                    count = -1
+                else:
+                    count -= 1
+            else:
+                trends.append('NOTREND')
+            previous_value = mva
+
+        areas = []
+        for mva in reversed(data['close'][-5:]):
+            area = 0
+            price = float(data['prices'][-1][3])
+            if sell:
+                purchase_price = float(get_purchasing_price(name))
+                if price >= (purchase_price * 1.02):
+                    print('Should sell with 10% profit')
+                    return True
+                if price < purchase_price:
+                    print('Selling at a loss')
+                    return True
+            areas.append(mva / price)
+
+        if buy:
+            counter = 0
+            if count >= 5:
+                for area in areas:
+                    counter += area
+                if counter / 3 >= 1.05:
+                    return True
+        return False
+
+
 # control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
