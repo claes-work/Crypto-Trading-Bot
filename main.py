@@ -75,6 +75,12 @@ def make_crypto_data(data):
     return data
 
 
+# save the crypto data array as JSON
+def save_crypto_data(data):
+    with open('data.json', 'r') as f:
+        json.dump(data, f, indent=4)
+
+
 # get all crypto trading pairs
 def get_pairs():
     return ['XETHZUSD', 'XXBTZUSD', 'MANAUSD', 'GRTUSD', 'LSKUSD', 'SCUSD']
