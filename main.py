@@ -63,6 +63,18 @@ def get_purchasing_price(name):
     return trades[name][-1]['price_usd']
 
 
+# create an data array for each crypto pair
+def make_crypto_data(data):
+    for name in get_pairs():
+        data[name] = {
+            'high': [],
+            'low': [],
+            'close': [],
+            'prices': []
+        }
+    return data
+
+
 # get all crypto trading pairs
 def get_pairs():
     return ['XETHZUSD', 'XXBTZUSD', 'MANAUSD', 'GRTUSD', 'LSKUSD', 'SCUSD']
