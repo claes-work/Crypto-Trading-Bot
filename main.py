@@ -57,6 +57,12 @@ def load_trades():
     return trades
 
 
+# get the purchasing price in USD from the trades.json file
+def get_purchasing_price(name):
+    trades = load_trades()
+    return trades[name][-1]['price_usd']
+
+
 if __name__ == '__main__':
     k = krakenex.API()
     kraken.load_key('kraken.key')
