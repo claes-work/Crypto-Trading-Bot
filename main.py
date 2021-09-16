@@ -244,6 +244,28 @@ def check_data(name, crypto_data, should_buy):
         try_sell(mva[name], name, crypto_data)
 
 
+# the bot that is buying and selling after checking each crypto pairs every 20 seconds
+def bot(since, k, pairs):
+    while True:
+        # comment out to track the same 'since'
+        # since = ret['result']['last']
+        for pair in pairs:
+            trades = load_trades()
+            if len(trades[pair]) > 0:
+                crypto_data = get_crypto_data(pair, since)
+                if trades[pair][-1]['sold'] or trades[pair][-1] is None:
+                    # check if the bot should buy
+                    check_data(pair, crypto_data, True)
+                if trades[pair][-1]['bought']:
+                    # check if the bot should sell
+                    check_data(pair, crypto_data, False)
+            else:
+                crypto_data = get_crypto_data(pair, since)
+                check_data(pair, crypto_data, True)
+
+        time.sleep(20)
+
+
 # control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
