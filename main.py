@@ -77,8 +77,20 @@ def make_crypto_data(data):
 
 # save the crypto data array as JSON
 def save_crypto_data(data):
-    with open('data.json', 'r') as f:
-        json.dump(data, f, indent=4)
+    with open('data.json', 'r') as file:
+        json.dump(data, file, indent=4)
+
+
+# load crypto data from the data.json file
+def load_crypto_data_from_file():
+    data = {}
+    with open('data.json', 'r') as file:
+        try:
+            data = json.load(file)
+        except:
+            data = make_crypto_data(data)
+            save_crypto_data(data)
+    return data
 
 
 # get all crypto trading pairs
