@@ -6,7 +6,8 @@ import json
 k = krakenAPI(kraken_api)
 df, last = kraken.get_ohlc_data('BCHUSD', ascending=True)
 
-
+def now():
+    return decimal.Decimal(time.time())
 
 if __name__ == '__main__':
     k = krakenex.API()
