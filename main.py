@@ -113,6 +113,16 @@ def get_pairs():
     return ['XETHZUSD', 'XXBTZUSD', 'MANAUSD', 'GRTUSD', 'LSKUSD', 'SCUSD']
 
 
+# calculate the available funds by using the actual balance
+def get_available_funds():
+    balance = get_balance()
+    money = float(balance['ZUSD'])
+    cryptos_not_owned = 6 - (len(balance) - 2)
+    funds = money / cryptos_not_owned
+    return funds
+
+
+# control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
     kraken.load_key('kraken.key')
