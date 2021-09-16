@@ -45,6 +45,18 @@ def get_crypto_data(pair, since):
     return ret['result'][pair]
 
 
+# load trades from the trades.json file
+def load_trades():
+    trades = {}
+    with open('trades.json', 'r') as file:
+        try:
+            trades = json.load(file)
+        except:
+            for crypto in pairs:
+                trades[crypto] = []
+    return trades
+
+
 if __name__ == '__main__':
     k = krakenex.API()
     kraken.load_key('kraken.key')
