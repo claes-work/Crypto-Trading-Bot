@@ -210,6 +210,13 @@ def check_opportunity(data, name, sell, buy):
         return False
 
 
+# analyse the data to see if it is a good opportunity to buy and try to buy if so
+def try_buy(data, name, crypto_data):
+    make_trade = check_opportunity(data, name, False, True)
+    if make_trade:
+        buy_crypto(crypto_data, name)
+
+
 # control structure system variable __main__
 if __name__ == '__main__':
     k = krakenex.API()
