@@ -93,6 +93,21 @@ def load_crypto_data_from_file():
     return data
 
 
+# save all relevant trade data in the trades.json file
+def save_trade(close, name, bought, sold, amount):
+    trade = {
+        'time_stamp': str(int(time.time())),
+        'price_usd': close,
+        'bought': bought,
+        'sold': sold,
+        'amount': amount
+    }
+    trades = load_trades()
+    trades[name].append(trade)
+    with open('trades.json', 'w') as file:
+        json.dump(trades, file, indent=4)
+
+
 # get all crypto trading pairs
 def get_pairs():
     return ['XETHZUSD', 'XXBTZUSD', 'MANAUSD', 'GRTUSD', 'LSKUSD', 'SCUSD']
