@@ -9,6 +9,16 @@ df, last = kraken.get_ohlc_data('BCHUSD', ascending=True)
 def now():
     return decimal.Decimal(time.time())
 
+
+def get_balance():
+    with open('balance.json', 'r') as file:
+        try:
+            return json.load(file)
+        except:
+            # change this for the actual query to the database once the script is working
+            return {'ZUSD': '1000.0', 'EUR.HOLD': '0.0000'}
+
+
 if __name__ == '__main__':
     k = krakenex.API()
     kraken.load_key('kraken.key')
